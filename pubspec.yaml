@@ -1,0 +1,60 @@
+name: task_project
+description: "A new Flutter project."
+
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.3 <4.0.0'
+
+dependencies:
+  bloc: ^8.1.1
+  equatable: ^2.0.5
+  shared_preferences: ^2.0.15
+  firebase_core:
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^8.1.1
+  flow_builder: ^0.1.0
+  font_awesome_flutter: ^10.1.0
+  formz:
+  google_fonts: ^6.0.0
+  meta: ^1.7.0
+  get_it:
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  json_annotation: ^4.9.0
+  cache:
+    path: packages/cache
+  form_inputs:
+    path: packages/form_inputs
+  authentication_repository:
+    path: packages/authentication_repository
+  local_storage_todos_api:
+    path: packages/local_storage_todos_api
+  todos_api:
+    path: packages/todos_api
+  todos_repository:
+    path: packages/todos_repository
+  settings_repository:
+    path: packages/settings_repository
+  cloud_firestore: ^5.4.0
+
+dev_dependencies:
+  build_runner: ^2.4.6
+  bloc_test: ^9.1.0
+  flutter_test:
+    sdk: flutter
+  mockingjay: ^0.5.0
+  mocktail: ^1.0.0
+  flutter_lints: ^3.0.0
+  json_serializable: ^6.8.0
+
+
+flutter:
+  uses-material-design: true
+  generate: true
+  assets:
+    - lib/assets/
+
