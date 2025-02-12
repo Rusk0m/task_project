@@ -6,11 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings_repository/settings_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:local_storage_todos_api/local_storage_todos_api.dart';
+import 'package:storage_todos_api/storage_todo_api.dart';
 import 'package:task_project/app/view/app.dart';
-import 'package:task_project/app/view/app_view.dart';
-import 'package:task_project/theme/cubit/theme_cubit.dart';
 import 'package:todos_repository/todos_repository.dart';
 import 'package:task_project/app/bloc_observer.dart';
+
 
 import 'l10n/cubit/language_cubit.dart';
 
@@ -23,7 +23,9 @@ Future<void> main() async {
 
   // Инициализация репозиториев
   final authenticationRepository = AuthenticationRepository();
-  final todosApi = LocalStorageTodosApi(plugin: await SharedPreferences.getInstance(),);
+  //final todosApi = LocalStorageTodosApi(plugin: await SharedPreferences.getInstance(),);
+  final todosApi = FirestoreStorageTodoApi();
+
   final todosRepository = TodosRepository(todosApi: todosApi);
   final settingsRepository = SettingsRepository();
 

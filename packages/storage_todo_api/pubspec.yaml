@@ -1,0 +1,16 @@
+name: storage_todos_api
+description: A Very Good Project created by Very Good CLI.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: "^3.3.0"
+dependencies:
+  firebase_auth:
+  cloud_firestore:
+  todos_api:
+    path: ../todos_api
+
+dev_dependencies:
+  mocktail: ^1.0.3
+  very_good_analysis: ^5.1.0

@@ -14,29 +14,40 @@ class EditTodoPage extends StatelessWidget {
   static Route<void> route({Todo? initialTodo}) {
     return MaterialPageRoute(
       fullscreenDialog: true,
-      builder: (context) => BlocProvider(
-        create: (context) => EditTodoBloc(
-          todosRepository: context.read<TodosRepository>(),
-          initialTodo: initialTodo,
-        ),
-        child: const EditTodoPage(),
-      ),
+      builder: (context) =>
+          BlocProvider(
+            create: (context) =>
+                EditTodoBloc(
+                  todosRepository: context.read<TodosRepository>(),
+                  initialTodo: initialTodo,
+                ),
+            child: const EditTodoPage(),
+          ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<EditTodoBloc, EditTodoState>(
-      listenWhen: (previous, current) =>
-          previous.status != current.status &&
-          current.status == EditTodoStatus.success,
-      listener: (context, state) => Navigator.of(context).pop(),
+      listenWhen: (previous, current) => previous.status != current.status,
+      listener: (context, state) {
+        if (state.status == EditTodoStatus.failure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Ошибка: Заполните все поля!'),
+              duration: Duration(seconds: 1),
+            ),
+          );
+        } else if (state.status == EditTodoStatus.success) {
+          Navigator.of(context).pop();
+        }
+      },
       child: const EditTodoView(),
     );
   }
 }
 
-class EditTodoView extends StatelessWidget {
+  class EditTodoView extends StatelessWidget {
   const EditTodoView({super.key});
 
   @override
@@ -45,7 +56,6 @@ class EditTodoView extends StatelessWidget {
     final status = context.select((EditTodoBloc bloc) => bloc.state.status);
     final isNewTodo = context.select((EditTodoBloc bloc) => bloc.state.isNewTodo,);
     //DateTime? reminderTime;
-
 
     return Scaffold(
       appBar: AppBar(
@@ -164,51 +174,3 @@ class _TextFieldWithDatePicker extends StatelessWidget {
     );
   }
 }
-/*
-
-class _TextFieldWithDatePicker extends StatelessWidget {
-  const _TextFieldWithDatePicker();
-
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final state = context.watch<EditTodoBloc>().state;
-
-    return TextFormField(
-      readOnly: true,
-      decoration: InputDecoration(
-        labelText: 'Время напоминания',
-        suffixIcon: IconButton(
-          icon: Icon(Icons.access_time),
-          onPressed: () => _selectReminderTime(context),
-        ),
-      ),
-      controller: TextEditingController(
-        text: reminderTime != null
-            ? DateFormat('HH:mm').format(reminderTime!)
-            : '',
-      ),
-    );
-  }
-}
-
-Future<void> _selectReminderTime(BuildContext context) async {
-  final TimeOfDay? pickedTime = await showTimePicker(
-    context: context,
-    initialTime: TimeOfDay.now(),
-  );
-
-  if (pickedTime == null) return;
-
-  // Объединить с текущей датой
-  final now = DateTime.now();
-  reminderTime = DateTime(
-    now.year,
-    now.month,
-    now.day,
-    pickedTime.hour,
-    pickedTime.minute,
-  );
-}
-*/

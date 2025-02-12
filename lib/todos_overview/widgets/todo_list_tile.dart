@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:todos_repository/todos_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -27,7 +29,7 @@ class TodoListTile extends StatelessWidget {
     return Dismissible(
       key: Key('todoListTile_dismissible_${todo.id}'),
       onDismissed: onDismissed,
-      direction: DismissDirection.endToStart,
+      direction: DismissDirection.startToEnd,
       background: Container(
         alignment: Alignment.centerRight,
         color: theme.colorScheme.error,
@@ -53,16 +55,18 @@ class TodoListTile extends StatelessWidget {
         subtitle: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  todo.description,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Text(l10n!.titleDueDate),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    todo.description,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(l10n!.titleDueDate),
+                ],
+              ),
             ),
             Text(
               DateFormat('dd.MM.yyyy').format(todo.dueDate!),

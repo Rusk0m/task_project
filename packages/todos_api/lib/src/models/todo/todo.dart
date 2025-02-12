@@ -1,7 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 part 'todo.g.dart';
 
@@ -43,6 +44,7 @@ class Todo extends Equatable {
       reminderTime: reminderTime ?? this.reminderTime,
     );
   }
+
 
   factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
 

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:task_project/edit_todo/bloc/edit_todo_bloc.dart';
 
 class TextFieldWithDatePicker extends StatelessWidget {
   final String label;
   final DateTime? selectedDate;  // Параметр для текущей выбранной даты
   final Function(DateTime) onDateSelected;
 
-  const TextFieldWithDatePicker({
+  const TextFieldWithDatePicker({super.key,
     required this.label,
     required this.selectedDate,
     required this.onDateSelected,

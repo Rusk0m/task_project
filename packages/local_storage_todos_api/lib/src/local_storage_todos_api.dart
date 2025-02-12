@@ -21,10 +21,6 @@ class LocalStorageTodosApi extends TodosApi {
     const [],
   );
 
-  /// The key used for storing the todos locally.
-  ///
-  /// This is only exposed for testing and shouldn't be used by consumers of
-  /// this library.
   @visibleForTesting
   static const kTodosCollectionKey = '__todos_collection_key__';
 

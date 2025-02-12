@@ -25,6 +25,9 @@ dependencies:
     sdk: flutter
   intl: any
   json_annotation: ^4.9.0
+  cloud_firestore: ^5.4.0
+  storage_todos_api:
+    path: packages/storage_todo_api
   cache:
     path: packages/cache
   form_inputs:
@@ -39,7 +42,7 @@ dependencies:
     path: packages/todos_repository
   settings_repository:
     path: packages/settings_repository
-  cloud_firestore: ^5.4.0
+
 
 dev_dependencies:
   build_runner: ^2.4.6

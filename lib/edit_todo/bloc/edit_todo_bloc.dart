@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:todos_repository/todos_repository.dart';
 import 'package:todos_api/src/models/todo/todo.dart' show Todo;
 
@@ -37,7 +38,15 @@ class EditTodoBloc extends Bloc<EditTodoEvent, EditTodoState> {
   }
 
   Future<void> _onSubmitted(EditTodoSubmitted event, Emitter<EditTodoState> emit) async {
+    if (state.title.isEmpty || state.description.isEmpty || state.completionDate == null) {
+      emit(state.copyWith(status: EditTodoStatus.initial)); // Сбрасываем статус
+      await Future.delayed(const Duration(milliseconds: 10)); // Даем Flutter время обновить состояние
+      emit(state.copyWith(status: EditTodoStatus.failure)); // Теперь BlocListener снова сработает
+      return;
+    }
+
     emit(state.copyWith(status: EditTodoStatus.loading));
+
     final todo = (state.initialTodo ?? Todo(title: '')).copyWith(
       title: state.title,
       description: state.description,
@@ -49,9 +58,10 @@ class EditTodoBloc extends Bloc<EditTodoEvent, EditTodoState> {
       await _todosRepository.saveTodo(todo);
       emit(state.copyWith(status: EditTodoStatus.success));
     } catch (e) {
-      emit(state.copyWith(status: EditTodoStatus.failure));
+      emit(state.copyWith(status: EditTodoStatus.failure)); // Это вызовет BlocListener
     }
   }
+
 
   // Обработчик для события EditTodoSetCompletionDate
   void _onSetCompletionDate(
