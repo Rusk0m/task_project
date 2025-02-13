@@ -5,33 +5,60 @@ import 'package:todos_api/todos_api.dart';
 
 class FirestoreStorageTodoApi extends TodosApi {
   final FirebaseFirestore _firestore;
-  final CollectionReference _todosCollection;
+  CollectionReference? _todosCollection;
 
-  FirestoreStorageTodoApi({FirebaseFirestore? firestore})
-      : _firestore = firestore ?? FirebaseFirestore.instance,
-        _todosCollection = (firestore ?? FirebaseFirestore.instance).collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('tasks');
-
+  FirestoreStorageTodoApi(this._firestore) {
+    _updateCollection();
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      _updateCollection();
+    });
+  }
+  void _updateCollection() {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      _firestore.clearPersistence(); // Очищаем кеш, если разлогинились
+    }
+    _todosCollection = user != null
+        ? _firestore.collection('users').doc(user.uid).collection('tasks')
+        : null;
+  }
 
   @override
   Stream<List<Todo>> getTodos() {
-    return _todosCollection.snapshots().map((snapshot) {
-      return snapshot.docs.map((doc) => Todo.fromJson(doc.data() as Map<String, dynamic>)).toList();
+    if (_todosCollection == null) {
+      return Stream.value(
+          [],); // Возвращаем пустой список, если пользователь не авторизован
+    }
+    return _todosCollection!.snapshots().map((snapshot) {
+      return snapshot.docs
+          .map((doc) => Todo.fromJson(doc.data() as Map<String, dynamic>))
+          .toList();
     });
   }
 
   @override
   Future<void> saveTodo(Todo todo) async {
-    await _todosCollection.doc(todo.id).set(todo.toJson());
+    if (_todosCollection == null) {
+      throw Exception("Пользователь не авторизован");
+    }
+    await _todosCollection!.doc(todo.id).set(todo.toJson());
   }
 
   @override
   Future<void> deleteTodo(String id) async {
-    await _todosCollection.doc(id).delete();
+    if (_todosCollection == null) {
+      throw Exception("Пользователь не авторизован");
+    }
+    await _todosCollection!.doc(id).delete();
   }
 
   @override
   Future<int> clearCompleted() async {
-    final querySnapshot = await _todosCollection.where('isCompleted', isEqualTo: true).get();
+    if (_todosCollection == null) {
+      throw Exception("Пользователь не авторизован");
+    }
+    final querySnapshot =
+        await _todosCollection!.where('isCompleted', isEqualTo: true).get();
     for (final doc in querySnapshot.docs) {
       await doc.reference.delete();
     }
@@ -40,7 +67,10 @@ class FirestoreStorageTodoApi extends TodosApi {
 
   @override
   Future<int> completeAll({required bool isCompleted}) async {
-    final querySnapshot = await _todosCollection.get();
+    if (_todosCollection == null) {
+      throw Exception("Пользователь не авторизован");
+    }
+    final querySnapshot = await _todosCollection!.get();
     int updatedCount = 0;
     for (final doc in querySnapshot.docs) {
       final todo = Todo.fromJson(doc.data() as Map<String, dynamic>);
@@ -53,6 +83,5 @@ class FirestoreStorageTodoApi extends TodosApi {
   }
 
   @override
-  Future<void> close() async {
-  }
+  Future<void> close() async {}
 }

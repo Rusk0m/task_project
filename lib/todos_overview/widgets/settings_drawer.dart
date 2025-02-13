@@ -1,8 +1,4 @@
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:task_project/authentication/authentication.dart';
@@ -17,19 +13,28 @@ class SettingsDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeCubit = context.read<ThemeCubit>();
     final l10n = AppLocalizations.of(context);
+    final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
 
     return Drawer(
       child: ListView(
         children: [
           SizedBox(
-            height: 80,
+            height: 90,
             child: DrawerHeader(
-              child: Center(child: Text(l10n!.todosSettingDrawerHeader)),
+              child: Center(
+                  child: Column(
+                children: [
+                  Text(l10n!.todosSettingDrawerHeader),
+                  Text(user.email??''),
+                ],
+              )),
             ),
           ),
-          const SizedBox(height: 100,),
+          const SizedBox(
+            height: 100,
+          ),
           ListTile(
-            title:  Text(l10n.darkTheme),
+            title: Text(l10n.darkTheme),
             trailing: Switch(
               value: context.watch<ThemeCubit>().state == ThemeMode.dark,
               onChanged: (value) {
@@ -65,7 +70,9 @@ class SettingsDrawer extends StatelessWidget {
           Center(
             child: ElevatedButton(
                 onPressed: () {
-                  context.read<AuthenticationBloc>().add(const AuthenticationLogoutPressed());
+                  context
+                      .read<AuthenticationBloc>()
+                      .add(const AuthenticationLogoutPressed());
                 },
                 child: Text(l10n.titleLogOutButton)),
           ),

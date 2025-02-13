@@ -51,7 +51,6 @@ class EditTodoBloc extends Bloc<EditTodoEvent, EditTodoState> {
       title: state.title,
       description: state.description,
       dueDate: state.completionDate,
-      reminderTime: state.reminderDate,
     );
 
     try {
