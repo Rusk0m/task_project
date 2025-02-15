@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:task_project/authentication/authentication.dart';
-import 'package:task_project/home/home.dart';
-import 'package:task_project/login/login.dart';
+import 'package:task_project/screens/home/view/home_page.dart';
+import 'package:task_project/screens/login/view/login_page.dart';
 
 List<Page<dynamic>> onGenerateAuthenticationViewPages(
     AuthenticationStatus state,

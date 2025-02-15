@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:task_project/authentication/authentication.dart';
+import 'package:task_project/l10n/cubit/language_cubit.dart';
 import 'package:task_project/theme/theme.dart';
-
-import '../../l10n/language.dart';
 
 class SettingsDrawer extends StatelessWidget {
   const SettingsDrawer({super.key});

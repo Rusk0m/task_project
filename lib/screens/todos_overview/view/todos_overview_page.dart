@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task_project/edit_todo/view/edit_todo_page.dart';
-import 'package:task_project/todos_overview/widgets/settings_drawer.dart';
+import 'package:task_project/screens/edit_todo/view/edit_todo_page.dart';
+import 'package:task_project/screens/todos_overview/widgets/settings_drawer.dart';
 import 'package:todos_repository/todos_repository.dart';
 
 import '../bloc/todos_overview_bloc.dart';
