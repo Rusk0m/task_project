@@ -23,7 +23,7 @@ Future<void> main() async {
 
   // Инициализация репозиториев
   final authenticationRepository = AuthenticationRepository();
-  //final todosApi = LocalStorageTodosApi(plugin: await SharedPreferences.getInstance(),);
+  //final todosApi = LocalStorageTodosApi(plugin: await SharedPreferences.getInstance(),); //Использование локольного хранилища
   final todosApi = FirestoreStorageTodoApi(FirebaseFirestore.instance);
 
   final todosRepository = TodosRepository(todosApi: todosApi);

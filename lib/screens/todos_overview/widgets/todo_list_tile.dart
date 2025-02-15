@@ -52,26 +52,25 @@ class TodoListTile extends StatelessWidget {
             decoration: TextDecoration.lineThrough,
           ),
         ),
-        subtitle: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    todo.description,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(l10n!.titleDueDate),
-                ],
-              ),
-            ),
             Text(
-              DateFormat('dd.MM.yyyy').format(todo.dueDate!),
+              todo.description,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(l10n!.titleDueDate),
+                Text(
+                  DateFormat('dd.MM.yyyy hh:m').format(todo.dueDate!),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 15),
+                ),
+              ],
             ),
           ],
         ),

@@ -28,14 +28,15 @@ class EditTodoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return BlocListener<EditTodoBloc, EditTodoState>(
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
         if (state.status == EditTodoStatus.failure) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Ошибка: Заполните все поля!'),
-              duration: Duration(seconds: 1),
+            SnackBar(
+              content: Text(l10n!.errorFieldNotFilled),
+              duration: const Duration(seconds: 1),
             ),
           );
         } else if (state.status == EditTodoStatus.success) {
@@ -162,11 +163,10 @@ class _TextFieldWithDatePicker extends StatelessWidget {
     final state = context.watch<EditTodoBloc>().state;
     final l10n = AppLocalizations.of(context);
 
-    return TextFieldWithDatePicker(
-
-      label: 'Completion Date',
-      selectedDate: state.completionDate, // Передаем дату из состояния блока
-      onDateSelected: (selectedDate) {
+    return TextFieldWithDateTimePicker(
+      label: l10n!.titleDueDate,
+      selectedDateTime: state.completionDate, // Передаем дату из состояния блока
+      onDateTimeSelected: (selectedDate) {
         context
             .read<EditTodoBloc>()
             .add(EditTodoSetCompletionDate(selectedDate));

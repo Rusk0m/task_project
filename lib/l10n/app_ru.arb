@@ -24,7 +24,8 @@
   "titleEditTheme": "Изменить тему",
   "titleSwitchLanguageButton": "Изменить язык",
   "titleLogOutButton": "Выйти",
-  "titleDueDate": "Дата окончиния",
+  "titleDueDate": "Дата окончиния:",
   "titleRemainderTime": "Время предупреждения",
-  "darkTheme": "Темная тема"
+  "darkTheme": "Темная тема",
+  "errorFieldNotFilled": "Ошибка: Заполните все поля!"
 }

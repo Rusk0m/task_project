@@ -1,41 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:task_project/screens/edit_todo/bloc/edit_todo_bloc.dart';
 
-class TextFieldWithDatePicker extends StatelessWidget {
+class TextFieldWithDateTimePicker extends StatelessWidget {
   final String label;
-  final DateTime? selectedDate;  // Параметр для текущей выбранной даты
-  final Function(DateTime) onDateSelected;
+  final DateTime? selectedDateTime; // Теперь хранит дату и время
+  final Function(DateTime) onDateTimeSelected;
 
-  const TextFieldWithDatePicker({super.key,
+  const TextFieldWithDateTimePicker({
+    super.key,
     required this.label,
-    required this.selectedDate,
-    required this.onDateSelected,
+    required this.selectedDateTime,
+    required this.onDateTimeSelected,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        final DateTime? picked = await showDatePicker(
+        // 1. Выбор даты
+        final DateTime? pickedDate = await showDatePicker(
           context: context,
-          initialDate: selectedDate ?? DateTime.now(), // Если нет выбранной даты, показываем сегодняшнюю
+          initialDate: selectedDateTime ?? DateTime.now(),
           firstDate: DateTime.now(),
           lastDate: DateTime(2101),
         );
-        if (picked != null) {
-          onDateSelected(picked);  // Обрабатываем выбранную дату
-        }
+
+        if (pickedDate == null) return;
+
+        // 2. Выбор времени
+        final TimeOfDay? pickedTime = await showTimePicker(
+          context: context,
+          initialTime: selectedDateTime != null
+              ? TimeOfDay.fromDateTime(selectedDateTime!)
+              : TimeOfDay.now(),
+        );
+
+        if (pickedTime == null) return;
+
+        // 3. Объединение даты и времени
+        final combinedDateTime = DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
+
+        onDateTimeSelected(combinedDateTime);
       },
-      child: AbsorbPointer(  // Запрещает редактирование в TextField, но позволяет его нажимать
-        child: TextField(
+      child: AbsorbPointer(
+        child: TextFormField(
           readOnly: true,
           decoration: InputDecoration(
-            labelText: selectedDate != null ? DateFormat('yyyy-MM-dd').format(selectedDate!) : label,
+            hintText: label,
+            labelText: selectedDateTime != null
+                ? DateFormat('yyyy-MM-dd HH:mm').format(selectedDateTime!)
+                : label,
           ),
         ),
       ),
     );
   }
 }
-
-

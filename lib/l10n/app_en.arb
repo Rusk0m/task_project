@@ -24,7 +24,8 @@
   "titleEditTheme": "Edit Theme",
   "titleSwitchLanguageButton": "Switch Language",
   "titleLogOutButton": "LogOut",
-  "titleDueDate": "Completion Date",
+  "titleDueDate": "Completion Date:",
   "titleRemainderTime": "Remainder Time",
-  "darkTheme": "Dark theme"
+  "darkTheme": "Dark theme",
+  "errorFieldNotFilled": "Error: Fill in all fields!"
 }
