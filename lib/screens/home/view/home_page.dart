@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task_project/screens/notification/view/notification_page.dart';
 import '../../edit_todo/view/edit_todo_page.dart';
 import '../../stats/view/stats_page.dart';
 import '../../todos_overview/view/todos_overview_page.dart';
@@ -28,7 +29,7 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       body: IndexedStack(
         index: selectedTab.index,
-        children: const [TodosOverviewPage(), StatsPage()],
+        children: const [TodosOverviewPage(), StatsPage(), NotificationPage()],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -40,7 +41,7 @@ class HomeView extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _HomeTabButton(
               groupValue: selectedTab,
@@ -51,6 +52,11 @@ class HomeView extends StatelessWidget {
               groupValue: selectedTab,
               value: HomeTab.stats,
               icon: const Icon(Icons.show_chart_rounded),
+            ),
+            _HomeTabButton(
+              groupValue: selectedTab,
+              value: HomeTab.notification,
+              icon: const Icon(Icons.notifications),
             ),
           ],
         ),
@@ -76,7 +82,7 @@ class _HomeTabButton extends StatelessWidget {
       iconSize: 32,
       onPressed: () => context.read<HomeCubit>().setTab(value),
       color:
-      groupValue != value ? null : Theme.of(context).colorScheme.secondary,
+      groupValue != value ? null : Colors.green,
       icon: icon,
     );
   }

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
-import 'package:todos_repository/todos_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todos_api/src/models/todo/todo.dart';
 
@@ -65,7 +64,7 @@ class TodoListTile extends StatelessWidget {
               children: [
                 Text(l10n!.titleDueDate),
                 Text(
-                  DateFormat('dd.MM.yyyy hh:m').format(todo.dueDate!),
+                  DateFormat('dd.MM.yyyy hh:mm').format(todo.dueDate!),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontSize: 15),

@@ -8,6 +8,7 @@ import 'package:settings_repository/settings_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:local_storage_todos_api/local_storage_todos_api.dart';
 import 'package:storage_todos_api/storage_todo_api.dart';
+import 'package:task_project/api/firebase_api.dart';
 import 'package:task_project/app/view/app.dart';
 import 'package:todos_repository/todos_repository.dart';
 import 'package:task_project/app/bloc_observer.dart';
@@ -20,7 +21,7 @@ Future<void> main() async {
 
   // Инициализация Firebase
   await Firebase.initializeApp();
-
+  await FirebaseApi().initNotifications();
   // Инициализация репозиториев
   final authenticationRepository = AuthenticationRepository();
   //final todosApi = LocalStorageTodosApi(plugin: await SharedPreferences.getInstance(),); //Использование локольного хранилища

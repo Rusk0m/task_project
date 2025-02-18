@@ -55,8 +55,11 @@ class TodosOverviewBloc extends Bloc<TodosOverviewEvent, TodosOverviewState> {
       TodosOverviewTodoDeleted event,
       Emitter<TodosOverviewState> emit,
       ) async {
-    emit(state.copyWith(lastDeletedTodo: () => event.todo));
+
+    //emit(state.copyWith(lastDeletedTodo: () => event.todo));
     await _todosRepository.deleteTodo(event.todo.id);
+    emit(state.copyWith(lastDeletedTodo: () => event.todo));
+
   }
 
   Future<void> _onUndoDeletionRequested(

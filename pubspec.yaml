@@ -12,6 +12,7 @@ dependencies:
   equatable: ^2.0.5
   shared_preferences: ^2.0.15
   firebase_core:
+
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
@@ -42,6 +43,7 @@ dependencies:
     path: packages/todos_repository
   settings_repository:
     path: packages/settings_repository
+  firebase_messaging: ^15.2.2
 
 
 dev_dependencies:

@@ -54,6 +54,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1000701597699',
     projectId: 'todoapp-c6f86',
     storageBucket: 'todoapp-c6f86.firebasestorage.app',
+    androidClientId: '1000701597699-9qj5och4ecj9b9ul98ngatfukiuvr9od.apps.googleusercontent.com',
+    iosClientId: '1000701597699-vll1ao7eimin4bdqca1ec9n7tqgfp7tl.apps.googleusercontent.com',
     iosBundleId: 'com.example.taskProject',
   );
 
@@ -63,6 +65,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1000701597699',
     projectId: 'todoapp-c6f86',
     storageBucket: 'todoapp-c6f86.firebasestorage.app',
+    androidClientId: '1000701597699-9qj5och4ecj9b9ul98ngatfukiuvr9od.apps.googleusercontent.com',
+    iosClientId: '1000701597699-vll1ao7eimin4bdqca1ec9n7tqgfp7tl.apps.googleusercontent.com',
     iosBundleId: 'com.example.taskProject',
   );
 
@@ -75,4 +79,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'todoapp-c6f86.firebasestorage.app',
     measurementId: 'G-79FWGKRVV6',
   );
+
 }
